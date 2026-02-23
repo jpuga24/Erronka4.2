@@ -102,7 +102,7 @@ public class Main{
                     BufferedReader br = new BufferedReader(new FileReader(ruta))){
 
                     String linea;
-                    br.readLine(); // saltar cabecera
+                    br.readLine();
 
                     String sql = "INSERT INTO produktuak(izena, deskribapena, prezioa, stock, kategoria, irudia) VALUES (?, ?, ?, ?, ?, ?)";
                     PreparedStatement ps = conn.prepareStatement(sql);
