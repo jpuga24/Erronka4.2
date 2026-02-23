@@ -12,11 +12,9 @@ async function ProduktuakKargatu() {
         const productos = await res.json();
         productosGlobal = productos;
 
-        // Sacar categorías únicas
         const categorias = [...new Set(productos.map(p => p.category))];
         categoriasGlobal = categorias;
 
-        // Crear botones de categoría
         categorias.forEach((cat, i) => {
             const btn = document.createElement("button");
             btn.textContent = cat.toUpperCase();
