@@ -1,49 +1,49 @@
 const API_URL = "https://fakestoreapi.com/products";
 
-let categoriasGlobal = [];
-let productosGlobal = [];
+let kategoriakGlobal = [];
+let produktuakGlobal = [];
 
 async function ProduktuakKargatu() {
-    const contenedor = document.getElementById("produktuak");
-    const contenedorCategorias = document.getElementById("categorias");
+    const kontenedorea = document.getElementById("produktuak");
+    const KategoriaKontenedorea = document.getElementById("kategoriak");
 
     try {
         const res = await fetch(API_URL);
-        const productos = await res.json();
-        productosGlobal = productos;
+        const produktuak = await res.json();
+        produktuakGlobal = produktuak;
 
-        const categorias = [...new Set(productos.map(p => p.category))];
-        categoriasGlobal = categorias;
+        const kategoriak = [...new Set(produktuak.map(p => p.category))];
+        kategoriakGlobal = kategoriak;
 
-        categorias.forEach((cat, i) => {
+        kategoriak.forEach((cat, i) => {
             const btn = document.createElement("button");
             btn.textContent = cat.toUpperCase();
             if(i===0) btn.classList.add("active");
             btn.onclick = () => mostrarCategoria(cat, btn);
-            contenedorCategorias.appendChild(btn);
+            KategoriaKontenedorea.appendChild(btn);
         });
 
-        mostrarCategoria(categorias[0], contenedorCategorias.querySelector("button"));
+        kategoriakEnseinatu(kategoriak[0], KategoriaKontenedorea.querySelector("button"));
 
     } catch (e) {
-        contenedor.innerHTML = "<p>Ezin dira produktuak kargatu</p>";
+        kontenedorea.innerHTML = "<p>Ezin dira produktuak kargatu</p>";
         console.error(e);
     }
 }
 
-function mostrarCategoria(categoria, botonActivo) {
-    const contenedor = document.getElementById("produktuak");
-    contenedor.innerHTML = "";
+function kategoriakEnseinatu(categoria, botonActivo) {
+    const kontenedorea = document.getElementById("produktuak");
+    kontenedorea.innerHTML = "";
 
     document.querySelectorAll("#categorias button").forEach(b => b.classList.remove("active"));
     botonActivo.classList.add("active");
 
-    const productos = productosGlobal.filter(p => p.category === categoria);
+    const produktuak = produktuakGlobal.filter(p => p.category === categoria);
 
     const grid = document.createElement("div");
     grid.className = "produktuak";
 
-    productos.forEach(p => {
+    produktuak.forEach(p => {
         const div = document.createElement("div");
         div.className = "produktua";
 
