@@ -1,4 +1,3 @@
-// Aumentar cantidad
 function GehituKantitatea(id) {
     let saskia = getSaskia();
     let p = saskia.find(p => p.id === Number(id));
@@ -9,7 +8,6 @@ function GehituKantitatea(id) {
     }
 }
 
-// Disminuir cantidad
 function KenduKantitatea(id) {
     let saskia = getSaskia();
     let p = saskia.find(p => p.id === Number(id));
@@ -23,14 +21,12 @@ function KenduKantitatea(id) {
     }
 }
 
-// Eliminar producto completamente
 function Ezabatu(id) {
     let saskia = getSaskia().filter(p => p.id !== Number(id));
     saveSaskia(saskia);
     renderSaskia();
 }
 
-// Mostrar cesta en HTML
 function renderSaskia() {
     let saskia = getSaskia();
     let tbody = document.getElementById("saskia");
@@ -62,7 +58,6 @@ function renderSaskia() {
     document.getElementById("total").innerText = total.toFixed(2) + "€";
 }
 
-// Renderizar al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
     renderSaskia();
 });

@@ -1,7 +1,7 @@
 const API_URL = "https://fakestoreapi.com/products";
 
-let categoriasGlobal = []; // Guardar categorías
-let productosGlobal = [];  // Guardar todos los productos
+let categoriasGlobal = [];
+let productosGlobal = [];
 
 async function ProduktuakKargatu() {
     const contenedor = document.getElementById("produktuak");
@@ -20,12 +20,11 @@ async function ProduktuakKargatu() {
         categorias.forEach((cat, i) => {
             const btn = document.createElement("button");
             btn.textContent = cat.toUpperCase();
-            if(i===0) btn.classList.add("active"); // primera categoría activa
+            if(i===0) btn.classList.add("active");
             btn.onclick = () => mostrarCategoria(cat, btn);
             contenedorCategorias.appendChild(btn);
         });
 
-        // Mostrar la primera categoría por defecto
         mostrarCategoria(categorias[0], contenedorCategorias.querySelector("button"));
 
     } catch (e) {
@@ -34,16 +33,13 @@ async function ProduktuakKargatu() {
     }
 }
 
-// Mostrar productos de una categoría
 function mostrarCategoria(categoria, botonActivo) {
     const contenedor = document.getElementById("produktuak");
     contenedor.innerHTML = "";
 
-    // Quitar clase active de todos los botones
     document.querySelectorAll("#categorias button").forEach(b => b.classList.remove("active"));
     botonActivo.classList.add("active");
 
-    // Filtrar productos de la categoría
     const productos = productosGlobal.filter(p => p.category === categoria);
 
     const grid = document.createElement("div");
@@ -70,5 +66,4 @@ function mostrarCategoria(categoria, botonActivo) {
     contenedor.appendChild(grid);
 }
 
-// Ejecutar al cargar
 document.addEventListener("DOMContentLoaded", ProduktuakKargatu);

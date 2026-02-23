@@ -1,4 +1,3 @@
-// Funciones para obtener y guardar la cesta
 function getSaskia() {
     return JSON.parse(localStorage.getItem("saskia")) || [];
 }
@@ -7,7 +6,6 @@ function saveSaskia(cesta) {
     localStorage.setItem("saskia", JSON.stringify(cesta));
 }
 
-// Añadir producto a la cesta
 function SaskiraGehitu(id, title, price) {
     let saskia = getSaskia();
     let existitu = saskia.find(p => p.id === Number(id));
