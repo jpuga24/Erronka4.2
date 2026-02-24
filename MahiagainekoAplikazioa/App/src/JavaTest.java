@@ -13,7 +13,6 @@ public class JavaTest {
         Assert.assertEquals(10.0, p.getPrezioa(), 0.01);
     }
 
-    // 2. TEST DE CONEXIÓN: ¿Funciona la base de datos?
     @Test
     public void testConexion() {
         try {
@@ -25,10 +24,8 @@ public class JavaTest {
         }
     }
 
-    // 3. TEST DE JSON: ¿Se crea el archivo físicamente?
     @Test
     public void testCrearJson() {
-        // Preparar datos mínimos
         List<Produktua> lista = new ArrayList<>();
         lista.add(new Produktua(1, "A", "B", 1.0, 1, "C", "D"));
         
@@ -41,7 +38,6 @@ public class JavaTest {
         File f = new File(nombreArchivo);
         Assert.assertTrue(f.exists());
         
-        // Limpiar (borrar el archivo después de la prueba)
         f.delete();
     }
 }
