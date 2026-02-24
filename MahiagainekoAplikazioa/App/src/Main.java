@@ -55,11 +55,11 @@ public class Main{
 
                 System.out.println("Izena: ");
                 izena=sc.nextLine();
-                sc.next();
+                sc.nextLine();
                 
                 System.out.println("Produktuaren deskribapena: ");
                 deskribapena=sc.nextLine();
-                sc.next();
+                sc.nextLine();
 
                 System.out.println("Prezioa: ");
                 prezioa=sc.nextDouble();
@@ -69,11 +69,11 @@ public class Main{
 
                 System.out.println("Kategoria: ");
                 kategoria=sc.nextLine();
-                sc.next();
+                sc.nextLine();
 
                 System.out.println("Produktuaren irudiak: ");
                 irudia=sc.nextLine();
-                sc.next();
+                sc.nextLine();
 
                 try (Connection conn = DBKonexioa.getConnection()) {
 
