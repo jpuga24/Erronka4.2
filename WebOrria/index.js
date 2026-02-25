@@ -4,22 +4,22 @@ const prevBtn = document.querySelector('.carousel-btn.prev');
 const nextBtn = document.querySelector('.carousel-btn.next');
 
 let index = 0;
-let productos = [];
+let produktuak = [];
 
-async function cargarProductos() {
+async function ProduktuakKargatu() {
     try {
         const res = await fetch(API_URL);
-        productos = await res.json();
-        mostrarProductos();
+        produktuak = await res.json();
+        produktuakEnseinatu();
     } catch(e) {
         console.error("No se pudieron cargar los productos", e);
         carousel.innerHTML = "<p>Errore bat gertatu da produktuak kargatzerakoan.</p>";
     }
 }
 
-function mostrarProductos() {
+function produktuakEnseinatu() {
     carousel.innerHTML = '';
-    productos.forEach(p => {
+    produktuak.forEach(p => {
         const div = document.createElement('div');
         div.className = 'carousel-item';
         div.innerHTML = `
@@ -37,7 +37,7 @@ function showSlide(i) {
 }
 
 nextBtn.addEventListener('click', () => {
-    const totalItems = productos.length;
+    const totalItems = produktuak.length;
     const visibleItems = Math.floor(carousel.parentElement.offsetWidth / (250 + 20));
     if(index < totalItems - visibleItems) {
         index++;
@@ -52,4 +52,4 @@ prevBtn.addEventListener('click', () => {
     }
 });
 
-document.addEventListener('DOMContentLoaded', cargarProductos);
+document.addEventListener('DOMContentLoaded', ProduktuakKargatu);
