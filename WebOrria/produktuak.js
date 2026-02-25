@@ -23,7 +23,6 @@ async function ProduktuakKargatu() {
             KategoriaKontenedorea.appendChild(btn);
         });
 
-        // Llamamos a la función inicial
         if (kategoriak.length > 0) {
             kategoriakEnseinatu(kategoriak[0], KategoriaKontenedorea.querySelector("button"));
         }
@@ -35,7 +34,7 @@ async function ProduktuakKargatu() {
 }
 
 function kategoriakEnseinatu(categoria, botonActivo) {
-    const kontenedorea = document.getElementById("produktuak"); // Variable correcta
+    const kontenedorea = document.getElementById("produktuak");
     kontenedorea.innerHTML = "";
 
     document.querySelectorAll("#kategoriak button").forEach(b => b.classList.remove("active"));
@@ -44,7 +43,7 @@ function kategoriakEnseinatu(categoria, botonActivo) {
     const produktuak = produktuakGlobal.filter(p => p.category === categoria);
 
     const grid = document.createElement("div");
-    grid.className = "produktua-grid"; // Cambiado para evitar conflicto de CSS con el item
+    grid.className = "produktua-grid";
 
     produktuak.forEach(p => {
         const div = document.createElement("div");
@@ -58,7 +57,6 @@ function kategoriakEnseinatu(categoria, botonActivo) {
         `;
 
         div.querySelector("button").onclick = () => {
-            // Asegúrate de que esta función existe en tu código
             if (typeof SaskiraGehitu === "function") {
                 SaskiraGehitu(p.id, p.title, p.price);
             } else {
@@ -69,7 +67,7 @@ function kategoriakEnseinatu(categoria, botonActivo) {
         grid.appendChild(div);
     });
 
-    kontenedorea.appendChild(grid); // ¡Corregido! Ahora usa 'kontenedorea'
+    kontenedorea.appendChild(grid);
 }
 
 document.addEventListener("DOMContentLoaded", ProduktuakKargatu);
