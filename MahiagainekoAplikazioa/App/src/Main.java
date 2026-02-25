@@ -5,7 +5,6 @@ import java.sql.*;
 import java.io.*;
 
 public class Main {
-
     public static void esportatuJSON(String fitxIzena, List<Produktua> produktuak) {
         try (PrintWriter out = new PrintWriter(new FileWriter(fitxIzena))) {
             out.println("[");
@@ -27,7 +26,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
         String izena;
         String deskribapena;
         double prezioa;
@@ -257,7 +255,7 @@ public class Main {
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
-                    } else {
+                    }else {
                         System.out.println("Sartu produktuaren deskribapena: ");
                         deskribapena = sc.nextLine();
                         try (Connection conn = DBKonexioa.getConnection()) {
