@@ -20,7 +20,7 @@ public class JavaTest {
             Assert.assertNotNull(conn);
             conn.close();
         } catch (Exception e) {
-            Assert.fail("No hay conexión: " + e.getMessage());
+            Assert.fail("Ez dago konexiorik: " + e.getMessage());
         }
     }
 
@@ -29,12 +29,10 @@ public class JavaTest {
         List<Produktua> lista = new ArrayList<>();
         lista.add(new Produktua(1, "A", "B", 1.0, 1, "C", "D"));
         
-        String nombreArchivo = "test_basico.json";
+        String nombreArchivo = "testak.json";
         
-        // Ejecutar
         Main.esportatuJSON(nombreArchivo, lista);
         
-        // Verificar
         File f = new File(nombreArchivo);
         Assert.assertTrue(f.exists());
         
