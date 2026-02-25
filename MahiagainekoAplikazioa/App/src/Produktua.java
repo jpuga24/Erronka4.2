@@ -17,11 +17,25 @@ public class Produktua {
         this.irudia = irudia;
     }
 
-    public int getId() { return id; }
-    public String getIzena() { return izena; }
-    public String getDeskribapena() { return deskribapena; }
-    public double getPrezioa() { return prezioa; }
-    public int getStocka() { return stock; }
-    public String getKategoria() { return kategoria; }
-    public String getIrudia() { return irudia; }
+    public int getId() {
+        return id;
+    }
+    public String getIzena() {
+        return izena;
+        }
+    public String getDeskribapena() {
+        return deskribapena;
+        }
+    public double getPrezioa() {
+        return prezioa;
+        }
+    public int getStocka() {
+        return stock; 
+        }
+    public String getKategoria() {
+        return kategoria; 
+        }
+    public String getIrudia() {
+        return irudia; 
+        }
 }
