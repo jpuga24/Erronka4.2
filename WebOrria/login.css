@@ -1,0 +1,125 @@
+header {
+    background-color: #333;
+    padding: 15px 30px;
+    margin-bottom: 30px;
+}
+
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.main-nav a:hover {
+    background-color: #555;
+}
+
+body{
+    background-color:#ffffff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 70px);
+    padding: 20px;
+}
+
+form{
+    border:1px solid black;
+    padding:40px;
+    width:300px;
+    box-sizing: border-box;
+}
+
+input{
+    width:100%;
+    margin-bottom:15px;
+    padding:8px;
+    box-sizing: border-box;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    background-color:black;
+    color:white;
+    border:none;
+}
+
+h2{
+    margin-bottom:20px;
+    text-align:center;
+}
+
+.error{
+    color:red;
+    font-size:14px;
+    margin-top:10px;
+}
+
+@media (max-width:768px){
+    header{
+        padding:10px 15px;
+    }
+
+    .main-nav{
+        flex-direction:column;
+        gap:10px;
+        align-items:center;
+    }
+
+    .login-container{
+        padding:15px;
+    }
+
+    form{
+        width:90%;
+        padding:30px;
+    }
+
+    input{
+        padding:7px;
+    }
+
+    button{
+        padding:8px;
+    }
+
+    h2{
+        font-size:1.5rem;
+        margin-bottom:15px;
+    }
+
+    .error{
+        font-size:12px;
+    }
+}
+
+@media (min-width:769px) and (max-width:1024px){
+    header{
+        padding:15px 20px;
+    }
+
+    form{
+        width:80%;
+        padding:35px;
+    }
+
+    h2{
+        font-size:1.7rem;
+    }
+}
