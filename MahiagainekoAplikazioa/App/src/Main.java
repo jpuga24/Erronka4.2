@@ -29,9 +29,10 @@ public class Main {
         String izena;
         String deskribapena;
         double prezioa;
-        int stock;
+        int stocka;
         String kategoria;
         String irudia;
+        String sortzeData;
 
         Scanner sc = new Scanner(System.in);
         int aukera = -1;
@@ -64,43 +65,49 @@ public class Main {
                     prezioa = sc.nextDouble();
 
                     System.out.println("Stock erabilgarria: ");
-                    stock = sc.nextInt();
+                    stocka = sc.nextInt();
                     sc.nextLine();
 
                     System.out.println("Kategoria: ");
                     kategoria = sc.nextLine();
 
-                    System.out.println("Produktuaren irudiak: ");
+                    System.out.println("Irudia: ");
                     irudia = sc.nextLine();
 
+                    System.out.println("Sortze-data (YYYY-MM-DD): ");
+                    sortzeData = sc.nextLine();
+
                     try (Connection conn = DBKonexioa.getConnection()) {
-                        String sql = "INSERT INTO produktuak(izena, deskribapena, prezioa, stock, kategoria, irudia) VALUES (?, ?, ?, ?, ?, ?)";
+                        String sql = "INSERT INTO Produktuak(Izena, Deskribapena, Prezioa, stocka, Kategoria, Irudia, Sortze_data) VALUES (?, ?, ?, ?, ?, ?, ?)";
                         PreparedStatement ps = conn.prepareStatement(sql);
                         ps.setString(1, izena);
                         ps.setString(2, deskribapena);
                         ps.setDouble(3, prezioa);
-                        ps.setInt(4, stock);
+                        ps.setInt(4, stocka);
                         ps.setString(5, kategoria);
                         ps.setString(6, irudia);
+                        ps.setDate(7, java.sql.Date.valueOf(sortzeData));
 
                         int lerroak = ps.executeUpdate();
                         System.out.println("Produktua ondo gehitu da. Gehitutako lerroak: " + lerroak);
                     } catch (SQLException e) {
                         e.printStackTrace();
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Errorea: Dataren formatua ez da zuzena. Erabili YYYY-MM-DD.");
                     }
                     break;
 
                 case 2:
-                    System.out.println("Sartu CSV fitxategiaren bidea:");
-                    String ruta = sc.nextLine();
+                    System.out.println("Sartu CSV fitxategiaren izena (adibidez, produktuak.csv):");
+                    String fitxategiIzena = sc.nextLine();
 
                     try (Connection conn = DBKonexioa.getConnection();
-                        BufferedReader br = new BufferedReader(new FileReader(ruta))) {
+                        BufferedReader br = new BufferedReader(new FileReader(fitxategiIzena))) {
 
                         String linea;
                         br.readLine();
 
-                        String sql = "INSERT INTO produktuak(izena, deskribapena, prezioa, stock, kategoria, irudia) VALUES (?, ?, ?, ?, ?, ?)";
+                        String sql = "INSERT INTO Produktuak(Izena, Deskribapena, Prezioa, stocka, Kategoria, Irudia, Sortze_data) VALUES (?, ?, ?, ?, ?, ?, CURDATE())";
                         PreparedStatement ps = conn.prepareStatement(sql);
 
                         int kont = 0;
@@ -119,6 +126,8 @@ public class Main {
                         }
                         System.out.println("CSV kargatuta. " + kont + " produktu gehitu dira.");
 
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Errorea: Ez da aurkitu '" + fitxategiIzena + "' izeneko fitxategirik. Ziurtatu proiektuaren karpeta nagusian dagoela.");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -140,7 +149,7 @@ public class Main {
                     String irudiBerria = sc.nextLine();
 
                     try (Connection conn = DBKonexioa.getConnection()) {
-                        String sql = "UPDATE produktuak SET prezioa=?, stock=?, irudia=? where izena=?";
+                        String sql = "UPDATE Produktuak SET Prezioa=?, stocka=?, Irudia=? WHERE Izena=?";
                         PreparedStatement ps = conn.prepareStatement(sql);
                         ps.setDouble(1, prezioBerria);
                         ps.setInt(2, stockBerria);
@@ -160,7 +169,7 @@ public class Main {
                     izena = sc.nextLine();
 
                     try (Connection conn = DBKonexioa.getConnection()) {
-                        String sql = "DELETE FROM produktuak WHERE izena=?";
+                        String sql = "DELETE FROM Produktuak WHERE Izena=?";
                         PreparedStatement ps = conn.prepareStatement(sql);
                         ps.setString(1, izena);
 
@@ -173,25 +182,25 @@ public class Main {
 
                 case 5:
                     System.out.println("Informazioa esportatzea...");
-                    List<Produktua> produktuak = new ArrayList<>();
+                    List<Produktua> produktuKarpeta = new ArrayList<>();
                     try (Connection conn = DBKonexioa.getConnection()) {
-                        String sql = "SELECT * FROM produktuak";
+                        String sql = "SELECT * FROM Produktuak";
                         PreparedStatement ps = conn.prepareStatement(sql);
                         ResultSet rs = ps.executeQuery();
 
                         while (rs.next()) {
                             Produktua p = new Produktua(
                                 rs.getInt("Id_produktua"),
-                                rs.getString("izena"),
-                                rs.getString("deskribapena"),
-                                rs.getDouble("prezioa"),
-                                rs.getInt("stock"),
-                                rs.getString("kategoria"),
-                                rs.getString("irudia")
+                                rs.getString("Izena"),
+                                rs.getString("Deskribapena"),
+                                rs.getDouble("Prezioa"),
+                                rs.getInt("stocka"),
+                                rs.getString("Kategoria"),
+                                rs.getString("Irudia")
                             );
-                            produktuak.add(p);
+                            produktuKarpeta.add(p);
                         }
-                        esportatuJSON("produktuak.json", produktuak);
+                        esportatuJSON("produktuak.json", produktuKarpeta);
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -206,12 +215,12 @@ public class Main {
 
                     if (seiAukera == 1) {
                         try (Connection conn = DBKonexioa.getConnection()) {
-                            String sql = "SELECT * from produktuak";
+                            String sql = "SELECT * FROM Produktuak";
                             Statement st = conn.createStatement();
                             ResultSet rs = st.executeQuery(sql);
                             System.out.println("--- Produktu Guztiak ---");
                             while(rs.next()){
-                                System.out.println("ID: " + rs.getInt(1) + " | Izena: " + rs.getString(2));
+                                System.out.println("ID: " + rs.getInt("Id_produktua") + " | Izena: " + rs.getString("Izena"));
                             }
                         } catch (SQLException e) {
                             e.printStackTrace();
@@ -220,13 +229,13 @@ public class Main {
                         System.out.println("Sartu kategoriaren izena: ");
                         kategoria = sc.nextLine();
                         try (Connection conn = DBKonexioa.getConnection()) {
-                            String sql = "SELECT * from produktuak WHERE kategoria=?";
+                            String sql = "SELECT * FROM Produktuak WHERE Kategoria=?";
                             PreparedStatement ps = conn.prepareStatement(sql);
                             ps.setString(1, kategoria);
                             ResultSet rs = ps.executeQuery();
                             System.out.println("--- " + kategoria + " kategoriako produktuak ---");
                             while(rs.next()){
-                                System.out.println("Izena: " + rs.getString("izena"));
+                                System.out.println("Izena: " + rs.getString("Izena"));
                             }
                         } catch (SQLException e) {
                             e.printStackTrace();
@@ -245,26 +254,26 @@ public class Main {
                         System.out.println("Sartu produktuaren izena: ");
                         izena = sc.nextLine();
                         try (Connection conn = DBKonexioa.getConnection()) {
-                            String sql = "SELECT * FROM produktuak WHERE izena LIKE ?";
+                            String sql = "SELECT * FROM Produktuak WHERE Izena LIKE ?";
                             PreparedStatement ps = conn.prepareStatement(sql);
                             ps.setString(1, "%" + izena + "%");
                             ResultSet rs = ps.executeQuery();
                             while(rs.next()){
-                                System.out.println("Aurkitua: " + rs.getString("izena") + " - " + rs.getDouble("prezioa") + "€");
+                                System.out.println("Aurkitua: " + rs.getString("Izena") + " - " + rs.getDouble("Prezioa") + "€");
                             }
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
-                    }else {
+                    } else {
                         System.out.println("Sartu produktuaren deskribapena: ");
                         deskribapena = sc.nextLine();
                         try (Connection conn = DBKonexioa.getConnection()) {
-                            String sql = "SELECT * FROM produktuak WHERE deskribapena LIKE ?";
+                            String sql = "SELECT * FROM Produktuak WHERE Deskribapena LIKE ?";
                             PreparedStatement ps = conn.prepareStatement(sql);
                             ps.setString(1, "%" + deskribapena + "%");
                             ResultSet rs = ps.executeQuery();
                             while(rs.next()){
-                                System.out.println("Aurkitua: " + rs.getString("izena") + " [" + rs.getString("deskribapena") + "]");
+                                System.out.println("Aurkitua: " + rs.getString("Izena") + " [" + rs.getString("Deskribapena") + "]");
                             }
                         } catch (SQLException e) {
                             e.printStackTrace();
