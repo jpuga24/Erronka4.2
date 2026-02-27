@@ -1,6 +1,7 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "c:\\Users\\javie\\OneDrive\\Escritorio\\Erronka4\\Erronka4\\Mahaigaineko aplikazioa\\lib\\mysql-connector-j-9.6.0.jar"
+        "c:\\Users\\javie\\OneDrive\\Escritorio\\Erronka4\\Erronka4\\Mahaigaineko aplikazioa\\lib\\mysql-connector-j-9.6.0.jar",
+        "c:\\Users\\javie\\OneDrive\\Escritorio\\mysql-connector-j-9.6.0\\mysql-connector-j-9.6.0\\mysql-connector-j-9.6.0.jar"
     ]
 }
